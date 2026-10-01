@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FitBuddy AI personalized seven-day fitness planner">
+  <title>{% block title %}FitBuddy AI{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+  <script defer src="{{ url_for('static', path='/js/app.js') }}"></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary navigation">
+      <a class="brand" href="/" aria-label="FitBuddy home">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span>FitBuddy <strong>AI</strong></span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Plan generator</a>
+        <a href="/view-all-users">Admin view</a>
+        <a href="/docs">API docs</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <span class="footer-brand">FitBuddy AI</span>
+        <p>Personalized fitness planning powered by FastAPI and Gemini.</p>
+      </div>
+      <p class="disclaimer">General fitness information only. Stop exercising if you feel sharp pain and seek qualified guidance for injuries or health concerns.</p>
+    </div>
+  </footer>
+</body>
+</html>

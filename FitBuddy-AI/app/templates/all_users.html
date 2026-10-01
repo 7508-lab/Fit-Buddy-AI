@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy admin view{% endblock %}
+{% block content %}
+<section class="admin-hero container">
+  <div><span class="section-kicker">Coach dashboard</span><h1>Users and workout plans</h1><p>Review registered users, goals, generation mode, and their latest plan status.</p></div>
+  <a class="primary-button small link-button" href="/">Create a plan</a>
+</section>
+
+<section class="admin-section container">
+  {% if users %}
+  <div class="table-shell">
+    <table>
+      <thead><tr><th>User</th><th>Profile</th><th>Goal</th><th>Plans</th><th>Latest status</th></tr></thead>
+      <tbody>
+      {% for user in users %}
+        {% set latest = user.plans[-1] if user.plans else none %}
+        <tr>
+          <td><strong>{{ user.name }}</strong><span>{{ user.user_code }}</span></td>
+          <td>{{ user.age }} years<span>{{ '%.1f'|format(user.weight) }} kg</span></td>
+          <td>{{ goal_labels[user.goal] }}<span>{{ user.intensity|title }} intensity</span></td>
+          <td><strong>{{ user.plans|length }}</strong><span>saved record{% if user.plans|length != 1 %}s{% endif %}</span></td>
+          <td>{% if latest %}<span class="status-badge {{ latest.generation_mode }}">{{ latest.generation_mode|title }}</span><span>{% if latest.updated_plan %}Feedback applied{% else %}Original plan{% endif %}</span>{% else %}<span>No plan</span>{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state"><span>0</span><h2>No users yet</h2><p>Generate the first plan and the user will appear here.</p><a class="primary-button small link-button" href="/">Open plan generator</a></div>
+  {% endif %}
+</section>
+{% endblock %}

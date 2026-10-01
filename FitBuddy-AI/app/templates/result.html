@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Your FitBuddy plan{% endblock %}
+{% block content %}
+<section class="result-hero container">
+  <div>
+    <div class="eyebrow"><span class="status-dot"></span>{% if updated %}Plan updated{% else %}Plan generated{% endif %} · {{ plan.generation_mode|title }}</div>
+    <h1>{{ user.name }}, your week is ready.</h1>
+    <p>Goal: <strong>{{ goal_label }}</strong> · Intensity: <strong>{{ user.intensity|title }}</strong> · User ID: <strong>{{ user.user_code }}</strong></p>
+  </div>
+  <div class="result-actions">
+    <button class="secondary-button" type="button" data-copy-target="active-plan">Copy plan</button>
+    <button class="primary-button small" type="button" onclick="window.print()">Print plan</button>
+  </div>
+</section>
+
+<section class="result-layout container">
+  <article class="plan-card">
+    <div class="card-heading">
+      <div><span class="section-kicker">{% if plan.updated_plan %}Revised schedule{% else %}Your schedule{% endif %}</span><h2>Seven-day workout plan</h2></div>
+      <span class="model-badge">{{ plan.model_name }}</span>
+    </div>
+    <pre id="active-plan">{{ plan.updated_plan or plan.original_plan }}</pre>
+  </article>
+
+  <aside class="result-sidebar">
+    <article class="tip-card">
+      <span class="tip-icon" aria-hidden="true">✦</span>
+      <span class="section-kicker">Nutrition and recovery</span>
+      <h2>Your focused tip</h2>
+      <p>{{ plan.nutrition_tip }}</p>
+    </article>
+
+    <article class="feedback-card">
+      <span class="section-kicker">Make it fit better</span>
+      <h2>Update with feedback</h2>
+      <p>Describe one useful change. FitBuddy will rebuild the week while preserving recovery and progression.</p>
+      <form action="/submit-feedback" method="post" data-loading-form>
+        <input type="hidden" name="user_code" value="{{ user.user_code }}">
+        <label class="field">
+          <span>Your feedback</span>
+          <textarea name="feedback" minlength="5" maxlength="500" rows="5" placeholder="Example: Add more cardio and one extra recovery session." required>{{ plan.feedback or '' }}</textarea>
+        </label>
+        <button class="primary-button full" type="submit">
+          <span class="button-label">Update my plan</span>
+          <span class="button-loader" aria-hidden="true"></span>
+        </button>
+      </form>
+    </article>
+  </aside>
+</section>
+
+{% if plan.updated_plan %}
+<section class="original-section container">
+  <details>
+    <summary>View original plan for comparison</summary>
+    <pre>{{ plan.original_plan }}</pre>
+  </details>
+</section>
+{% endif %}
+{% endblock %}

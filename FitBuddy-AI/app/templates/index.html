@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy AI - Your adaptive fitness plan{% endblock %}
+{% block content %}
+<section class="hero container">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="status-dot"></span>{{ ai_status }} · {{ model_name }}</div>
+    <h1>A smarter fitness plan that adapts to you.</h1>
+    <p class="hero-lead">Tell FitBuddy your goal and preferred intensity. Get a structured seven-day workout plan, a focused nutrition tip, and an easy way to refine the schedule with feedback.</p>
+    <div class="metric-row" aria-label="Project highlights">
+      <div><strong>7</strong><span>planned days</span></div>
+      <div><strong>3</strong><span>core AI features</span></div>
+      <div><strong>1</strong><span>simple dashboard</span></div>
+    </div>
+  </div>
+  <aside class="hero-visual" aria-label="FitBuddy plan preview">
+    <div class="visual-top">
+      <span>Weekly rhythm</span><span class="mini-pill">Balanced</span>
+    </div>
+    <div class="rings">
+      <div class="ring ring-a"><span>68%</span></div>
+      <div class="ring-caption"><strong>Ready score</strong><span>Training + recovery</span></div>
+    </div>
+    <div class="week-bars" aria-hidden="true">
+      <span style="--h:58%"></span><span style="--h:82%"></span><span style="--h:70%"></span>
+      <span class="rest" style="--h:34%"></span><span style="--h:76%"></span><span style="--h:64%"></span>
+      <span class="rest" style="--h:28%"></span>
+    </div>
+    <div class="week-labels"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+  </aside>
+</section>
+
+<section class="planner-section container" id="planner">
+  <div class="section-heading">
+    <div>
+      <span class="section-kicker">Start your plan</span>
+      <h2>Build your personalized week</h2>
+    </div>
+    <p>Complete all fields. Your user ID lets you return later and update the latest plan.</p>
+  </div>
+
+  <form class="planner-card" action="/generate-workout" method="post" data-loading-form>
+    <div class="form-grid">
+      <label class="field">
+        <span>Name</span>
+        <input name="name" type="text" minlength="2" maxlength="80" placeholder="Enter your name" autocomplete="name" required>
+      </label>
+      <label class="field">
+        <span>User ID</span>
+        <input name="user_code" type="text" minlength="2" maxlength="40" placeholder="Example: FIT1001" autocomplete="off" required>
+      </label>
+      <label class="field">
+        <span>Age</span>
+        <input name="age" type="number" min="13" max="90" placeholder="18" required>
+      </label>
+      <label class="field">
+        <span>Weight in kg</span>
+        <input name="weight" type="number" min="25" max="300" step="0.1" placeholder="65.0" required>
+      </label>
+      <label class="field">
+        <span>Fitness goal</span>
+        <select name="goal" required>
+          <option value="" disabled selected>Select your goal</option>
+          <option value="weight_loss">Weight loss</option>
+          <option value="muscle_gain">Muscle gain</option>
+          <option value="general_wellness">General wellness</option>
+          <option value="endurance">Endurance</option>
+          <option value="flexibility">Flexibility</option>
+        </select>
+      </label>
+      <fieldset class="field intensity-field">
+        <legend>Workout intensity</legend>
+        <div class="segmented">
+          <label><input type="radio" name="intensity" value="low" required><span>Low</span></label>
+          <label><input type="radio" name="intensity" value="medium"><span>Medium</span></label>
+          <label><input type="radio" name="intensity" value="high"><span>High</span></label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="form-action">
+      <p><span class="shield" aria-hidden="true">✓</span> Details are stored locally in SQLite for this project.</p>
+      <button class="primary-button" type="submit">
+        <span class="button-label">Generate my plan</span>
+        <span class="button-loader" aria-hidden="true"></span>
+      </button>
+    </div>
+  </form>
+</section>
+
+<section class="features container" aria-labelledby="features-title">
+  <div class="section-heading compact">
+    <div><span class="section-kicker">How it helps</span><h2 id="features-title">One workflow, three useful outcomes</h2></div>
+  </div>
+  <div class="feature-grid">
+    <article class="feature-card"><span class="feature-index">01</span><h3>Workout generation</h3><p>A complete Day 1 to Day 7 schedule with warm-up, main workout, cooldown, and recovery.</p></article>
+    <article class="feature-card"><span class="feature-index">02</span><h3>Feedback update</h3><p>Ask for more cardio, extra recovery, or another adjustment and receive a revised plan.</p></article>
+    <article class="feature-card"><span class="feature-index">03</span><h3>Nutrition guidance</h3><p>A concise goal-based nutrition and hydration tip complements the weekly training plan.</p></article>
+  </div>
+</section>
+{% endblock %}

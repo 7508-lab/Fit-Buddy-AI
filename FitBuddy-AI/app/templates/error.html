@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<section class="error-state container">
+  <div class="error-code">!</div>
+  <span class="section-kicker">FitBuddy could not continue</span>
+  <h1>{{ title }}</h1>
+  <p>{{ message }}</p>
+  <a class="primary-button small link-button" href="/">Return to plan generator</a>
+</section>
+{% endblock %}
